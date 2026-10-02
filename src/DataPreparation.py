@@ -1,8 +1,11 @@
 # Contains the code for the data preparation step
 # Each function will address an issue with the dataset
 
-def remove_irrelevant_attr():
-    pass
+import pandas as pd
+
+def remove_irrelevant_attr(df: pd.DataFrame) -> pd.DataFrame:
+    new_df = df.drop(columns = ['label', 'tcprtt'])
+    return new_df
 
 def handle_missing_values():
     pass
