@@ -46,13 +46,14 @@ Date: 2/10/2026
 - Attributes that can be removed from the training dataset with certainty are:
     - tcprrt --> sum of synack and ackdat
     - label --> target label
+- While certain pairs present very-high correlation values, we cannot safely assume that one is relevant while the other isn't, these will be further investigated in the feature extraction.
 ### Missing Values
 - The goal of this step is to identify all attributes/instsances with missing entries.
 - I will need to produce a number which represents how many entries are missing.
 - Decide on the actions to take to handle these missing entries.
 - The two that stand out to me are 'service' and 'state', as these both can take on a value of '-' which I presume to be synonymous with a NULL value.
 - Running df.isna().sum() tells us that there is no missing entry within the dataset.
-- As there appears to be now missing entries within the Test-data-1.xlsx, we will skip this step for now.
+- As there appears to be no missing entries within the Test-data-1.xlsx, we will skip this step for now.
 ### Duplicates
 - The goal of this step is to identify duplicated attributes or instances within the dataset.
 - This involves me checking whether any attribute is duplicated, i.e. two identical columns.
@@ -64,6 +65,8 @@ Date: 2/10/2026
 - Having these duplicated rows clump together could indicate that these rows are duplicated data-entry or collection errors.
 - As they spread throughout the dataset, they could very well be independent data records.
 - Therefore, I have decided to keep every duplicated rows for now.
+#### Training-data.xlsx
+- Running it on this dataset, it is reported that 'is_ftp_login' and 'ct_ftp_cmd' are duplicated. This is could very well be concidence.
 ### Data Types
 - Based on the feature description, the datasets are mixed-typed, meaning that it contains both numerical and categorical data.
 - From the current dataset, we only have three categorical attributes, they are 'proto', 'service', and 'state'.
@@ -84,4 +87,5 @@ Date: 2/10/2026
     - This transformer takes in an array-like of integers or strings.
     - It will then create a binary column for each category and returns a sparse matrix.
     - handle_unknown: tells the transformer how to handle unknown categories during 'transform'.
-    
+#### Note:
+- From my understanding, this step will be performed onto the dataset once the data splitting to prevent data leakage, the event of validation data being used to train the model, which cause cause bias within the accuracy.
