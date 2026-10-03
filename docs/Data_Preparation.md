@@ -46,3 +46,42 @@ Date: 2/10/2026
 - Attributes that can be removed from the training dataset with certainty are:
     - tcprrt --> sum of synack and ackdat
     - label --> target label
+### Missing Values
+- The goal of this step is to identify all attributes/instsances with missing entries.
+- I will need to produce a number which represents how many entries are missing.
+- Decide on the actions to take to handle these missing entries.
+- The two that stand out to me are 'service' and 'state', as these both can take on a value of '-' which I presume to be synonymous with a NULL value.
+- Running df.isna().sum() tells us that there is no missing entry within the dataset.
+- As there appears to be now missing entries within the Test-data-1.xlsx, we will skip this step for now.
+### Duplicates
+- The goal of this step is to identify duplicated attributes or instances within the dataset.
+- This involves me checking whether any attribute is duplicated, i.e. two identical columns.
+- I am also tasked with checking for any duplicated instances, i.e. two identical rows.
+- Using df[df.duplicated()] returns us with a new DataFrame of 74 rows, i.e. there are 74 rows which are not unique.
+- I have found that a certain row is duplicated 40 times, while other rows are only duplicated 8 times are less. 
+- I have decided to investigate this specific row more indepth, to determine whether this duplication is valid or is it redundant.
+- I have investigated the index of each of the duplicated row, to determine whether they are spread throughout the dataset or not.
+- Having these duplicated rows clump together could indicate that these rows are duplicated data-entry or collection errors.
+- As they spread throughout the dataset, they could very well be independent data records.
+- Therefore, I have decided to keep every duplicated rows for now.
+### Data Types
+- Based on the feature description, the datasets are mixed-typed, meaning that it contains both numerical and categorical data.
+- From the current dataset, we only have three categorical attributes, they are 'proto', 'service', and 'state'.
+- proto:
+    - Within Test-data-1.xlsx, proto has 131 unique values.
+    - Feature description does not explicitly state the possible values.
+- service:
+    - Within Test-data-1.xlsx, service has 13 unique values.
+    - Feature description indicates that 'service' can take on at least 8 values.
+- state:
+    - Within Test-data-1.xlsx, service has 7 unique values.
+    - However, the feature description indicates that state has at least 16 different unique values.
+- My initial instinct is to binarise these data into a vector, i.e. perform one-hot-encoding on them.
+- However, I am unaware of how efficient it would be for attributes with a large number of unique values, e.g. proto.
+- I have decided that I will still use one-hot-encoding, for now, and not worry too much about the size of proto's vectors.
+- sklearn.preprocessing.OneHotEncoder()
+    - "Encode categorical features as one-hot numeric array."
+    - This transformer takes in an array-like of integers or strings.
+    - It will then create a binary column for each category and returns a sparse matrix.
+    - handle_unknown: tells the transformer how to handle unknown categories during 'transform'.
+    

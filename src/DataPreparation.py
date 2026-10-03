@@ -7,11 +7,13 @@ def remove_irrelevant_attr(df: pd.DataFrame) -> pd.DataFrame:
     new_df = df.drop(columns = ['label', 'tcprtt'])
     return new_df
 
-def handle_missing_values():
-    pass
+def handle_missing_values(df: pd.DataFrame) -> pd.DataFrame:
+    new_df = df
+    return new_df
 
-def handle_duplicates():
-    pass
+def handle_duplicates(df: pd.DataFrame) -> pd.DataFrame:
+    new_df = df
+    return new_df
 
 def convert_data_types():
     pass
