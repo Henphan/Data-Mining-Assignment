@@ -6,7 +6,7 @@
 - Decide on the number of splits for each
 
 6/10/2026:
-- I ran the k-NN with the following context:
+### k-NN hyperparameters tuning with the following context:
     - preprocessing:
         - dropped: tcprtt, is_ftp_login, dwin
         - one-hot-encoded: state, service, proto
@@ -25,7 +25,22 @@
     1     0.991731    0.000541
     Best k: 7
 ```
-- ran the Decision Tree with the following context:
+- Evaluation on the full training dataset:
+```
+              precision    recall  f1-score   support
+
+           0       1.00      0.98      0.99     38777
+           1       0.99      1.00      1.00    107077
+
+    accuracy                           0.99    145854
+   macro avg       0.99      0.99      0.99    145854
+weighted avg       0.99      0.99      0.99    145854
+```
+![k-NN confusion matrix](../out/knn_confusion.png)
+    
+
+
+- ### Decision Tree hyperparameter tuning with the following context:
     - preprocessing:
         - dropped: tcprtt, is_ftp_login, dwin
         - one-hot-encoded: state, service, proto
@@ -35,18 +50,47 @@
         - minimum split = 1 to 10
 - CV accuracy:
 ```
-({'dt__criterion': 'gini', 'dt__min_samples_split': 4},
- np.float64(0.9940557047931666))
+({'dt__criterion': 'gini', 'dt__min_samples_split': 2},
+ np.float64(0.9942408203827066))
 ```
-- I ran the Naive Bayes classifier with the following context:
+- Evaluation on the full training dataset:
+```
+              precision    recall  f1-score   support
+
+           0       0.99      0.99      0.99     38777
+           1       1.00      1.00      1.00    107077
+
+    accuracy                           0.99    145854
+   macro avg       0.99      0.99      0.99    145854
+weighted avg       0.99      0.99      0.99    145854
+```
+![DT confusion matrix](../out/dt_confusion.png)
+
+- ### Naive Bayes hyperparameter tuning with the following context:
     - preprocessing:
         - dropped: tcprtt, is_ftp_login, dwin
         - one-hot-encoded: state, service, proto
         - scaling: z-score norm
     - hyperparameter search:
-        - var_smoothing = [1e-12, 1e-11, 1e-10, 1e-9, 1e-8, 1e-7, 1e-6]
+        - var_smoothing = [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1]
 - CV accuracy:
 ```
-{'nb__var_smoothing': 1e-06}
-0.4430046487958525
+{'nb__var_smoothing': 0.01}
+0.9795274781078085
 ```
+- Evaluation on the full training dataset:
+```
+              precision    recall  f1-score   support
+
+           0       0.96      0.96      0.96     38777
+           1       0.99      0.99      0.99    107077
+
+    accuracy                           0.98    145854
+   macro avg       0.97      0.97      0.97    145854
+weighted avg       0.98      0.98      0.98    145854
+```
+![NB confusion matrix](../out/nb_confusion.png)
+
+
+## Preprocessing adjustments:
+- 
