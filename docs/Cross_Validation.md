@@ -91,6 +91,30 @@ weighted avg       0.98      0.98      0.98    145854
 ```
 ![NB confusion matrix](../out/nb_confusion.png)
 
+Test 1: 0.7806109652716238
+Test 2: 0.8914013891522035
 
 ## Preprocessing adjustments:
-- 
+The current dropped columns include: tcprtt, is_ftp_login, and dwin.
+- High correlation:
+```
+ct_ftp_cmd        is_ftp_login      1.000000
+dwin              swin              0.999965
+sloss             sbytes            0.997310
+dloss             dbytes            0.993889
+ct_srv_dst        ct_srv_src        0.981141
+                  ct_dst_src_ltm    0.974134
+sloss             spkts             0.971314
+ct_dst_src_ltm    ct_srv_src        0.969176
+dloss             dpkts             0.968572
+ct_src_dport_ltm  ct_dst_ltm        0.967416
+synack            tcprtt            0.964176
+sbytes            spkts             0.963762
+ackdat            tcprtt            0.960973
+dbytes            dpkts             0.955898
+```
+- Feature selection:
+    - We can see that smean = sbytes * spkts
+    - Same with dmean = dbytes * dpkts
+    - Therefore we can remove smean, dmean
+    - We can also see that sbytes and spkts are very similar
