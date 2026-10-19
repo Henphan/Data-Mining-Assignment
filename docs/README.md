@@ -13,6 +13,9 @@ This is the Python Jupyter Notebook which contains the entire pipeline which loa
     2. Run all of the cells under Data Preparation
     3. Run the cell under Cross Validation Setup
     4. Run the cell with make_knn_pipeline()
-    5. 
+    5. Run the cell under Final Evaluation
+- Step 5 should print out two accuracy scores for each test dataset.
 ## analysis.ipynb:
 This is also a Python Jupyter Notebook, but it contains the exploratory code. This Notebook was used to help me explore and examine the dataset, generating graphs, confusion matrices, statistics that would help justify choices that I have made throughout the assignment, mainly the preprocessing step.
+## Known problems:
+There is a small chance that the pipeline will not produce the exact same values as stated in the report even with random seeds in place. This would likely be due to missing random seeds in certain places.
